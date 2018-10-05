@@ -25,6 +25,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 
@@ -79,6 +80,18 @@ class Paint extends JFrame {
 				panel.repaint();
 			}
 		},
+		new Tool("line") {
+
+			public void mouseDragged(MouseEvent e) {
+				Line2D.Double line = (Line2D.Double) shape;
+				if(line == null) {
+					line = new Line2D.Double(e.getX(), e.getY(), 0, 0);
+					shapes.put(shape = line, color);
+				}
+				line.setLine(e.getX(), e.getY(),o.getX(), o.getY());
+				panel.repaint();
+			}
+		},
 		new Tool("rect") {
 			public void mouseDragged(MouseEvent e) {
 				Rectangle2D.Double rect = (Rectangle2D.Double)shape;
@@ -121,28 +134,46 @@ class Paint extends JFrame {
 			for(AbstractAction tool: tools) {
 				add(tool);
 			}
-			JButton blue = new JButton("blue");
+			JButton blue = new JButton();
+			blue.setBackground(Color.BLUE);
 			blue.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
 					color = Color.BLUE;
 				} 
 			});
 			add(blue);
-			JButton red = new JButton("red");
+			JButton red = new JButton();
+			red.setBackground(Color.RED);
 			red.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
 					color = Color.RED;
 				} 
 			});
 			add(red);
-			JButton green = new JButton("green");
+			JButton green = new JButton();
+			green.setBackground(Color.GREEN);
 			green.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
 					color = Color.GREEN;
 				} 
 			});
 			add(green);
-
+			JButton yellow = new JButton();
+			yellow.setBackground(Color.yellow);
+			yellow.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					color = Color.YELLOW;
+				} 
+			});
+			add(yellow);
+			JButton black = new JButton();
+			black.setBackground(Color.black);
+			black.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					color = Color.BLACK;
+				} 
+			});
+			add(black);
 		}}, BorderLayout.NORTH);
 
 		
