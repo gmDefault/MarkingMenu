@@ -23,6 +23,7 @@ import java.util.Map.Entry;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.event.MouseInputListener;
@@ -37,6 +38,7 @@ public class PaintVue extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private PaintModel pm;
+	private JLayeredPane lp = new JLayeredPane();
 
 	
 	public PaintVue(String title,  final PaintModel pm) {
@@ -93,11 +95,9 @@ public class PaintVue extends JFrame {
 		}};
 		
 
-		add(tb, BorderLayout.NORTH);
-		JMarkingMenu f = new JMarkingMenu();
-		add(f,BorderLayout.SOUTH);
+
 		
-		add(panel = new JPanel() {	
+		lp.add(panel = new JPanel() {	
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);	
 				Graphics2D g2 = (Graphics2D)g;
@@ -117,7 +117,18 @@ public class PaintVue extends JFrame {
 					g2.draw(e.getKey());
 				}
 			}
-		});
+		},JLayeredPane.DEFAULT_LAYER);
+		panel.setBounds(0,40,800,560);
+		JMarkingMenu f = new JMarkingMenu();
+		tb.setBounds(0,0,800,40);
+		f.setBounds(500,500,100,100);
+		lp.add(tb,JLayeredPane.FRAME_CONTENT_LAYER);
+
+		lp.add(f,JLayeredPane.PALETTE_LAYER);
+
+		add(lp);
+		
+		lp.remove(f);
 
 		pack();
 		setVisible(true);
