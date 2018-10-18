@@ -1,10 +1,13 @@
 package marking.ui;
+
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-public class JMarkingMenu extends JComponent{
+public class JMarkingMenu extends JComponent {
 
 	/**
 	 * 
