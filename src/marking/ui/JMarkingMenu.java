@@ -14,5 +14,5 @@ public class JMarkingMenu extends JComponent{
 	@Override
 	public void paint(Graphics g) {
 		g.drawRect(10, 10, 10, 10);
-	}
+z	}
 }
