@@ -13,6 +13,7 @@ import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
@@ -45,6 +46,24 @@ public class PaintVue extends JFrame {
 	public PaintVue(String title,  final PaintModel pm) {
 		super(title);
 		this.pm=pm;
+		final JMarkingMenu f = new JMarkingMenu(lp);
+
+		addMouseListener(new MouseListener() {
+
+			public void mouseClicked(MouseEvent e) {}
+
+			public void mousePressed(MouseEvent e) {
+				if (e.getButton() == MouseEvent.BUTTON3) {
+					System.out.println("Right CLick PRessed");
+					f.setBounds(e.getX() - 50,e.getY() - 75,100,100);
+					lp.add(f,JLayeredPane.PALETTE_LAYER);
+				}
+			}
+
+			public void mouseReleased(MouseEvent e) {}
+			public void mouseEntered(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {	}});
+		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(800, 600));
 		JToolBar tb = new JToolBar() {{
@@ -117,16 +136,13 @@ public class PaintVue extends JFrame {
 			}
 		},JLayeredPane.DEFAULT_LAYER);
 		panel.setBounds(0,40,800,560);
-		JMarkingMenu f = new JMarkingMenu();
 		tb.setBounds(0,0,800,40);
-		f.setBounds(500,500,100,100);
 	
 		lp.add(tb,JLayeredPane.FRAME_CONTENT_LAYER);
 
-		lp.add(f,JLayeredPane.PALETTE_LAYER);
 
 		add(lp);
-	
+
 		pack();
 		setVisible(true);
 	}
