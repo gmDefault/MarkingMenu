@@ -41,29 +41,13 @@ public class PaintVue extends JFrame {
 
 	private PaintModel pm;
 	private JLayeredPane lp = new JLayeredPane();
-
+	final JMarkingMenu f;
 	
 	public PaintVue(String title,  final PaintModel pm) {
 		super(title);
 		this.pm=pm;
-		final JMarkingMenu f = new JMarkingMenu(lp);
-
-		addMouseListener(new MouseListener() {
-
-			public void mouseClicked(MouseEvent e) {}
-
-			public void mousePressed(MouseEvent e) {
-				if (e.getButton() == MouseEvent.BUTTON3) {
-					System.out.println("Right CLick PRessed");
-					f.setBounds(e.getX() - 50,e.getY() - 75,100,100);
-					lp.add(f,JLayeredPane.PALETTE_LAYER);
-				}
-			}
-
-			public void mouseReleased(MouseEvent e) {}
-			public void mouseEntered(MouseEvent e) {}
-			public void mouseExited(MouseEvent e) {	}});
-		
+		f = new JMarkingMenu(lp);
+	
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(800, 600));
 		JToolBar tb = new JToolBar() {{
@@ -142,7 +126,23 @@ public class PaintVue extends JFrame {
 
 
 		add(lp);
+		panel.addMouseListener(new MouseListener() {
 
+			public void mouseClicked(MouseEvent e) {}
+
+			public void mousePressed(MouseEvent e) {
+				if (e.getButton() == MouseEvent.BUTTON3) {
+					System.out.println("Right CLick PRessed");
+					//Offset sur les Y 
+					f.setBounds(e.getX() - 50,e.getY() - 10,100,100);
+					System.out.println(e.getX() + " " + e.getY() + " " + f.getLocation().getX() + " " + f.getLocation().getY());
+					lp.add(f,JLayeredPane.PALETTE_LAYER);
+				}
+			}
+
+			public void mouseReleased(MouseEvent e) {}
+			public void mouseEntered(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {	}});
 		pack();
 		setVisible(true);
 	}

@@ -43,16 +43,15 @@ public class JMarkingMenu extends JComponent implements MouseInputListener{
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(Color.RED);
-		g2.drawRect(0, 0, 100, 100);
-		g2.fillRect(0, 0, 100, 100);
+		g2.fillOval(0, 0, 100, 100);
 		g2.setColor(Color.BLACK);
 		g2.setStroke(new BasicStroke(3));
 		g2.drawLine(this.getWidth()/2, this.getHeight()/2, x, y);
+		System.out.println(this.getLocation().getX() + " " + this.getLocation().getY());
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-			System.out.println("Click");		
 	}
 
 	@Override
@@ -76,7 +75,6 @@ public class JMarkingMenu extends JComponent implements MouseInputListener{
 	@Override
 	public void mouseExited(MouseEvent e) {
 		this.in = false;
-			System.out.println("Right CLick Released");
 			this.x = this.getWidth()/2;
 			this.y = this.getHeight()/2;
 			lp.remove(this);
