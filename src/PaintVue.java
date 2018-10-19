@@ -18,6 +18,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -30,6 +31,7 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.event.MouseInputListener;
 
+import marking.ui.Element;
 import marking.ui.JMarkingMenu;
 
 public class PaintVue extends JFrame {
@@ -46,8 +48,27 @@ public class PaintVue extends JFrame {
 	public PaintVue(String title,  final PaintModel pm) {
 		super(title);
 		this.pm=pm;
-		f = new JMarkingMenu(lp);
 	
+		Element elem = new Element("ss");
+		Element eleme = new Element("dd");
+		Element elemed = new Element("ddd");
+		Element elemedd = new Element("ddd");
+		Element elemeddd = new Element("ddd");
+
+
+		ArrayList<Element> array = new ArrayList<Element> () {};
+		array.add(elem);
+		array.add(eleme);
+		array.add(elemed);
+		array.add(elemedd);
+
+		array.add(elemeddd);
+
+		f = new JMarkingMenu(lp, array);
+		
+		final JMarkingMenu f = new JMarkingMenu(lp, array);
+
+
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(800, 600));
 		JToolBar tb = new JToolBar() {{
@@ -126,16 +147,14 @@ public class PaintVue extends JFrame {
 
 
 		add(lp);
+		
 		panel.addMouseListener(new MouseListener() {
 
 			public void mouseClicked(MouseEvent e) {}
 
 			public void mousePressed(MouseEvent e) {
 				if (e.getButton() == MouseEvent.BUTTON3) {
-					System.out.println("Right CLick PRessed");
-					//Offset sur les Y 
-					f.setBounds(e.getX() - 50,e.getY() - 10,100,100);
-					System.out.println(e.getX() + " " + e.getY() + " " + f.getLocation().getX() + " " + f.getLocation().getY());
+					f.setBounds(e.getX() - 100,e.getY() - 57 ,200,200);
 					lp.add(f,JLayeredPane.PALETTE_LAYER);
 				}
 			}
@@ -143,6 +162,7 @@ public class PaintVue extends JFrame {
 			public void mouseReleased(MouseEvent e) {}
 			public void mouseEntered(MouseEvent e) {}
 			public void mouseExited(MouseEvent e) {	}});
+		
 		pack();
 		setVisible(true);
 	}
