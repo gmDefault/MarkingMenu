@@ -7,8 +7,12 @@ public class Element {
 	private String name;
 	private Color color;
 	
-	public Element(String name, Color color) {
+	public Element(String name) {
 		this.name = name;
+	}
+	
+	
+	public Element(Color color) {
 		this.color = color;
 	}
 
