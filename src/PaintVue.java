@@ -161,7 +161,8 @@ public class PaintVue extends JFrame {
 
 			public void mouseReleased(MouseEvent e) {}
 			public void mouseEntered(MouseEvent e) {}
-			public void mouseExited(MouseEvent e) {	}});
+			public void mouseExited(MouseEvent e) {
+			}});
 		
 		pack();
 		setVisible(true);
@@ -205,6 +206,7 @@ public class PaintVue extends JFrame {
 		}
 
 		public void mouseMoved(MouseEvent e) {
+			
 		}
 	}
 
@@ -256,5 +258,6 @@ public class PaintVue extends JFrame {
 	Tool tool;
 
 	JPanel panel;
+	
 
 }
