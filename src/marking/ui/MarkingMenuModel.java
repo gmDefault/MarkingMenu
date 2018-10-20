@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class MarkingMenuModel {
 
-	private int x;
-	private int y;
+	private int x = 0;
+	private int y = 0;
 	private int size;
 	private ArrayList<Element> elements;
 

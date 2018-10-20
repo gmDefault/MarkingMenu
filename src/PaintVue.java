@@ -43,11 +43,12 @@ public class PaintVue extends JFrame {
 
 	private PaintModel pm;
 	private JLayeredPane lp = new JLayeredPane();
-
+	final JMarkingMenu f;
 	
 	public PaintVue(String title,  final PaintModel pm) {
 		super(title);
 		this.pm=pm;
+	
 		Element elem = new Element("ss");
 		Element eleme = new Element("dd");
 		Element elemed = new Element("ddd");
@@ -63,24 +64,11 @@ public class PaintVue extends JFrame {
 
 		array.add(elemeddd);
 
+		f = new JMarkingMenu(lp, array);
+		
 		final JMarkingMenu f = new JMarkingMenu(lp, array);
 
-		addMouseListener(new MouseListener() {
 
-			public void mouseClicked(MouseEvent e) {}
-
-			public void mousePressed(MouseEvent e) {
-				if (e.getButton() == MouseEvent.BUTTON3) {
-					System.out.println("Right CLick PRessed");
-					f.setBounds(e.getX() - 50,e.getY() - 75,200,200);
-					lp.add(f,JLayeredPane.PALETTE_LAYER);
-				}
-			}
-
-			public void mouseReleased(MouseEvent e) {}
-			public void mouseEntered(MouseEvent e) {}
-			public void mouseExited(MouseEvent e) {	}});
-		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(800, 600));
 		JToolBar tb = new JToolBar() {{
@@ -159,7 +147,22 @@ public class PaintVue extends JFrame {
 
 
 		add(lp);
+		
+		panel.addMouseListener(new MouseListener() {
 
+			public void mouseClicked(MouseEvent e) {}
+
+			public void mousePressed(MouseEvent e) {
+				if (e.getButton() == MouseEvent.BUTTON3) {
+					f.setBounds(e.getX() - 100,e.getY() - 57 ,200,200);
+					lp.add(f,JLayeredPane.PALETTE_LAYER);
+				}
+			}
+
+			public void mouseReleased(MouseEvent e) {}
+			public void mouseEntered(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {	}});
+		
 		pack();
 		setVisible(true);
 	}
@@ -195,8 +198,6 @@ public class PaintVue extends JFrame {
 		}
 
 		public void mouseReleased(MouseEvent e) {
-			panel.removeMouseListener(tool);
-			panel.removeMouseMotionListener(tool);
 			shape = null;
 		}
 

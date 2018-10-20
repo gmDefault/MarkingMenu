@@ -38,9 +38,10 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 
 	public JMarkingMenu(JLayeredPane lp, ArrayList<Element> arrayList) {
 		model = new MarkingMenuModel();
-		model.setElements(arrayList);
-		model.setX(50);
-		model.setY(50);
+
+		model.setElements(arrayList); 
+		model.setX(100);
+		model.setY(100);
 		in = false;
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
@@ -51,6 +52,7 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
+
 		g2.setColor(new Color(200, 0, 0, 150));
 
 		g2.fillOval(0, 0, 200, 200);
@@ -63,22 +65,26 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 
 		g2.setColor(Color.BLACK);
 
-		double angle = 0;
-		for (int i = 0; i < model.getSize(); i++) {
-			g2.drawLine(100, 100, (int) (100 + 100 * Math.cos(angle)), (int) (100 + 100 * Math.sin(angle)));
-			angle += pas;
+
+		double angle=0;
+		for(int i=0;i<model.getSize();i++) {
+			g2.drawLine(100,100, (int) (100+100*Math.cos(angle)), (int)(100+100*Math.sin(angle)));
+			angle+=pas;
 		}
 
 		g2.setColor(new Color(255, 0, 0, 255));
 		g2.fillOval(85, 85, 30, 30);
 
 		g2.setStroke(new BasicStroke(3));
-		g2.drawLine(this.getWidth() / 2, this.getHeight() / 2, model.getX(), model.getY());
+
+
+		g2.drawLine(this.getWidth()/2, this.getHeight()/2, model.getX(), model.getY());
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		System.out.println("Click");
+
 	}
 
 	@Override
@@ -108,6 +114,7 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 		lp.remove(this);
 		lp.repaint();
 
+
 	}
 
 	@Override
@@ -116,6 +123,7 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 		System.out.println(model.getX() + " " + model.getY() + " " + in + " " + e.getX() + " " + e.getY());
 
 		this.repaint();
+
 	}
 
 	@Override
