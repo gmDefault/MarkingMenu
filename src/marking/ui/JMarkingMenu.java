@@ -32,7 +32,6 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 	private final int height = 200;
 	private int state = 0;
 	private int choice1;
-	private int choice2;
 
 	/**
 	 * 
@@ -42,10 +41,10 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 	private Boolean in;
 	private JLayeredPane lp;
 
-	public JMarkingMenu(JLayeredPane lp, ArrayList<Element> arrayList) {
+	public JMarkingMenu(JLayeredPane lp, ArrayList<Element> arrayColor, ArrayList<Element> arrayTool) {
 		model = new MarkingMenuModel();
 
-		model.setElements(arrayList); 
+		model.setElements(arrayColor, arrayTool); 
 		model.setX(100);
 		model.setY(100);
 		in = false;
@@ -71,7 +70,6 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 
 		g2.setColor(Color.BLACK);
 
-
 		double angle=0;
 		for(int i=0;i<model.getSize();i++) {
 			g2.drawLine(100,100, (int) (100+100*Math.cos(angle)), (int)(100+100*Math.sin(angle)));
@@ -85,7 +83,6 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 
 		g2.setColor(new Color(255, 0, 0, 255));
 		g2.drawLine(this.getWidth()/2, this.getHeight()/2, model.getX(), model.getY());
-
 	}
 
 	@Override
@@ -121,7 +118,6 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 		state = state == 0 ? ++state : 0;
 		System.out.println(state);
 		if(state == 1) {
-			
 			this.setBounds((int) this.getLocation().getX() + e.getX()-100,(int) this.getLocation().getY() + e.getY()-100,200,200);
 			lp.repaint();
 		}
@@ -161,29 +157,9 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 		// the var "angle" is the angle between the right side of the marking menu, the center of the marking menu and the position of the mouse
 		// 0<angle<2*PI
 		double pas = 2 * Math.PI / model.getSize();
-		choiceNumber(e.getX(), e.getY());
 		this.portion=(int)(angle/pas);
 		this.repaint();
 	}
-	
-	public int choiceNumber(int x, int y) {
-		
-		double pas = 2 * Math.PI / model.getSize();
-//		Arc2D arc[] = new Arc2D[5]; //TODO
-		double angle = 0;
 
-		for(int i=0;i<model.getSize();i++) {
-			Arc2D.Float arcTemp = new Arc2D.Float(Arc2D.CHORD);
-			arcTemp.setArc(new Rectangle(0,0,200,200), (int) Math.toDegrees(angle), (int) Math.toDegrees(pas), Arc2D.PIE);
-			if(arcTemp.contains(new Point(x,y))) {
-				System.out.println("Numéro : " + i);
-			}
-			angle = angle + pas;
-		}
-		
-		return model.getSize();
-		
-	}
-	
 }
 

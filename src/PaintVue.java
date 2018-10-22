@@ -44,31 +44,32 @@ public class PaintVue extends JFrame {
 	private PaintModel pm;
 	private JLayeredPane lp = new JLayeredPane();
 	final JMarkingMenu f;
+	private Line2D persistentLine = new Line2D.Double(0,0,0,0);
 	
 	public PaintVue(String title,  final PaintModel pm) {
 		super(title);
 		this.pm=pm;
-	
-		Element elem = new Element("ss");
-		Element eleme = new Element("dd");
-		Element elemed = new Element("ddd");
-		Element elemedd = new Element("ddd");
-		Element elemeddd = new Element("ddd");
-
-
-		ArrayList<Element> array = new ArrayList<Element> () {};
-		array.add(elem);
-		array.add(eleme);
-		array.add(elemed);
-		array.add(elemedd);
-
-		array.add(elemeddd);
-
-		f = new JMarkingMenu(lp, array);
 		
-		final JMarkingMenu f = new JMarkingMenu(lp, array);
+		Element elem = new Element("Pen");
+		Element eleme = new Element("Line");
+		Element elemed = new Element("Rectangle");
+		Element elemedd = new Element("Ellipse");
 
 
+		ArrayList<Element> arrayColor = new ArrayList<Element> () {};
+		arrayColor.add(elem);
+		arrayColor.add(eleme);
+		arrayColor.add(elemed);
+		arrayColor.add(elemedd);
+
+		ArrayList<Element> arrayTool = new ArrayList<Element> () {};
+		arrayTool.add(elem);
+		arrayTool.add(eleme);
+		arrayTool.add(elemed);
+		arrayTool.add(elemedd);
+		
+		f = new JMarkingMenu(lp, arrayColor, arrayTool);
+		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(800, 600));
 		JToolBar tb = new JToolBar() {{
@@ -138,6 +139,7 @@ public class PaintVue extends JFrame {
 					g2.setColor(e.getValue());
 					g2.draw(e.getKey());
 				}
+				g2.draw(persistentLine);
 			}
 		},JLayeredPane.DEFAULT_LAYER);
 		panel.setBounds(0,40,800,560);
@@ -253,11 +255,21 @@ public class PaintVue extends JFrame {
 					abs(e.getY() - o.getY()));
 			panel.repaint();
 		}
-	}, };
+	}
+	};
 
 	Tool tool;
 
 	JPanel panel;
 	
+	
+	//TODO 
+	public void drawPersistentLine(Line2D line) {
+		this.persistentLine = line;
+	}
+	
+	public void removePersistentLine() {
+		this.persistentLine = new Line2D.Double(0,0,0,0);
+	}
 
 }
