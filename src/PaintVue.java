@@ -54,21 +54,29 @@ public class PaintVue extends JFrame {
 		Element elemed = new Element("ddd");
 		Element elemedd = new Element("ddd");
 		Element elemeddd = new Element("ddd");
-
-
-		ArrayList<Element> array = new ArrayList<Element> () {};
-		array.add(elem);
-		array.add(eleme);
-		array.add(elemed);
-		array.add(elemedd);
-
-		array.add(elemeddd);
-
-		f = new JMarkingMenu(lp, array);
 		
-		final JMarkingMenu f = new JMarkingMenu(lp, array);
+		Element elem1 = new Element(Color.BLACK);
+		Element eleme1 = new Element(Color.BLUE);
+		Element elemed1 = new Element(Color.GREEN);
+		Element elemedd1 = new Element(Color.GRAY);
+		Element elemeddd1 = new Element(Color.RED);
 
 
+		ArrayList<Element> arrayColor = new ArrayList<Element> () {};
+		arrayColor.add(elem1);
+		arrayColor.add(eleme1);
+		arrayColor.add(elemed1);
+		arrayColor.add(elemedd1);
+		
+		ArrayList<Element> arrayTool = new ArrayList<Element> () {};
+		arrayTool.add(elem);
+		arrayTool.add(eleme);
+		arrayTool.add(elemed);
+		arrayTool.add(elemedd);
+
+
+		f = new JMarkingMenu(lp, arrayColor, arrayTool );
+		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(800, 600));
 		JToolBar tb = new JToolBar() {{
