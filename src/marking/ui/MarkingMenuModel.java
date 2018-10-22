@@ -6,38 +6,76 @@ public class MarkingMenuModel {
 
 	private int x = 0;
 	private int y = 0;
-	private int size;
-	private ArrayList<Element> elements;
+	private int sizeColor;
+	private int sizeTool;
+	private ArrayList<Element> arrayColor;
+	private ArrayList<Element> arrayTool;
+
 
 	public MarkingMenuModel() {
 
 	}
 
-	public int getSize() {
-		return size;
+
+	public int getSizeColor() {
+		return sizeColor;
 	}
 
-	public void setSize(int size) {
-		this.size = size;
+
+	public void setSizeColor(int sizeColor) {
+		this.sizeColor = sizeColor;
 	}
 
-	public MarkingMenuModel(Element[] elements) {
 
-		for (int i = 0; i < elements.length; i++) {
-			this.elements.add(elements[i]);
+	public int getSizeTool() {
+		return sizeTool;
+	}
+
+
+	public void setSizeTool(int sizeTool) {
+		this.sizeTool = sizeTool;
+	}
+
+
+	public ArrayList<Element> getArrayColor() {
+		return arrayColor;
+	}
+
+
+	public void setArrayColor(ArrayList<Element> arrayColor) {
+		this.arrayColor = arrayColor;
+	}
+
+
+	public ArrayList<Element> getArrayTool() {
+		return arrayTool;
+	}
+
+
+	public void setArrayTool(ArrayList<Element> arrayTool) {
+		this.arrayTool = arrayTool;
+	}
+
+
+	public ArrayList<Element> getColors() {
+		return this.arrayColor;
+	}
+	
+	public ArrayList<Element> getTools() {
+		return this.arrayTool;
+	}
+
+
+	public void setElements(ArrayList<Element> arrayColor, ArrayList<Element> arrayTool) {
+		if(arrayColor != null && arrayTool !=null) {
+			this.sizeColor=arrayColor.size();
+			this.sizeTool=arrayTool.size();
+			
+			this.arrayColor = arrayColor;
+			this.arrayTool = arrayTool;
+
 		}
-		this.size=elements.length;
 
-	}
-
-	public ArrayList<Element> getElements() {
-		return elements;
-	}
-
-	public void setElements(ArrayList<Element> arrayList) {
-		this.size=arrayList.size();
-		this.elements = arrayList;
-		System.out.println(this.size);
 
 	}
 
