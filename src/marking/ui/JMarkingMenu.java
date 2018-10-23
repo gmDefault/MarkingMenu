@@ -184,8 +184,7 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 			this.setChangeColor(true);
 		}
 		else if(state==1 && choice1 == 1) {
-			MouseEvent me = new MouseEvent(this, 0, 0, 0, 0, 0, 0, true);
-			lp.dispatchEvent(me);
+			this.setChangeTool(true);
 		}
 		state = state == 0 ? ++state : 0;
 		System.out.println(state);
@@ -251,12 +250,9 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 			e = model.getColors().get(portion);
 		}
 		else {
-			changeTool = true;
-			e = model.getTools().get(2);
+			e = model.getTools().get(portion);
 		}
-		
 		return e;
-		
 	}
 	
 

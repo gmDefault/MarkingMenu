@@ -45,7 +45,7 @@ public class PaintVue extends JFrame {
 	private JLayeredPane lp = new JLayeredPane();
 	final JMarkingMenu f;
 	private Line2D persistentLine = new Line2D.Double(0,0,0,0);
-	
+	private Tool oldtool;
 	public PaintVue(String title,  final PaintModel pm) {
 		super(title);
 		this.pm=pm;
@@ -186,7 +186,15 @@ public class PaintVue extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 			}
 			public void mouseEntered(MouseEvent e) {
-
+				if(f.getChangeTool()) {	
+					System.out.println("aaaaaaaaa");
+					lp.removeMouseListener(tool);
+					lp.removeMouseMotionListener(tool);
+					tool = tools[f.getElement().getToolID()];
+					lp.addMouseListener(tool);
+					lp.addMouseMotionListener(tool);
+					f.setChangeTool(false);
+				}
 			}
 			public void mouseExited(MouseEvent e) {
 
