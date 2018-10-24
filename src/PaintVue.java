@@ -76,6 +76,7 @@ public class PaintVue extends JFrame {
 		arrayColor.add(new Element(Color.CYAN));
 
 
+
 		
 		ArrayList<Element> arrayTool = new ArrayList<Element> ();
 		arrayTool.add(pen);

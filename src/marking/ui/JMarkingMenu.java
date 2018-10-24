@@ -1,5 +1,6 @@
 package marking.ui;
 
+import java.awt.AWTEvent;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -8,6 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
+
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
@@ -38,6 +40,7 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 	private Font fontFirstMenu = new Font("TimesRoman", Font.BOLD, 15);
 	// fontTools is the font used in the tools menu
 	private Font fontTools= new Font("TimesRoman", Font.BOLD, 12);
+
 	private Boolean changeTool;
 	private Boolean changeColor = false;
 
@@ -83,6 +86,7 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 			g2.drawString("COLORS", (int)(0.65*radius), (int)(0.60*radius));
 
 			g2.drawString("TOOLS",(int)( 0.70*radius), (int) (radius+0.45*radius));
+
 
 			g2.setColor(Color.BLACK);
 			pas = Math.PI;
@@ -168,6 +172,7 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 					}
 					angle += pas;
 
+
 				}
 				g2.setTransform(orig);
 			}
@@ -179,6 +184,7 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 		g2.setStroke(new BasicStroke(3));
 
 		g2.setColor(Color.RED);
+
 
 		g2.drawLine(this.getWidth() / 2, this.getHeight() / 2, model.getX(), model.getY());
 
@@ -207,6 +213,7 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 		if (state == 1 && choice1 == 0) {
 			this.setChangeColor(true);
 		} else if (state == 1 && choice1 == 1) {
+
 			this.setChangeTool(true);
 		}
 		state = state == 0 ? ++state : 0;
@@ -214,6 +221,7 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 		if (state == 1) {
 			this.setBounds((int) this.getLocation().getX() + e.getX() - radius,
 					(int) this.getLocation().getY() + e.getY() - radius, width, height);
+
 			lp.repaint();
 		} else {
 			lp.remove(this);
@@ -267,21 +275,26 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 					pas = 2 * Math.PI / model.getSizeTool();
 				else
 					pas = 2 * Math.PI / 7;
+
 			}
 		}
 		this.portion = (int) (angle / pas);
 		this.repaint();
 	}
-
+	
 	public Element getElement() {
-		Element e;
-		if (this.choice1 == 0) {
+		Element e ;
+		if(this.choice1==0) {
 			e = model.getColors().get(portion);
-		} else {
+		}
+		else {
 			e = model.getTools().get(portion);
 		}
 		return e;
 	}
+
+
+
 
 	public Boolean getChangeColor() {
 		return changeColor;

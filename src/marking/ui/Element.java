@@ -17,6 +17,7 @@ public class Element {
 	private Color color = Color.BLACK;
 	
 	
+
 	public int getToolID() {
 		return toolID;
 	}
