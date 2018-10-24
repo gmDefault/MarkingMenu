@@ -4,11 +4,17 @@ import java.util.ArrayList;
 
 public class MarkingMenuModel {
 
+	// x is the x position of the Marking Menu
 	private int x = 0;
+	// y is the y position of the Marking Menu
 	private int y = 0;
+	// sizeColor is the number of colors in the marking menu
 	private int sizeColor;
+	// sizeTool is the number of tools in the marking menu
 	private int sizeTool;
+	//arrayColor is the array of Colors
 	private ArrayList<Element> arrayColor;
+	//arrayTool is the array of Tools
 	private ArrayList<Element> arrayTool;
 
 
@@ -66,6 +72,11 @@ public class MarkingMenuModel {
 	}
 
 
+	/**
+	 * Add elements in the marking Menu
+	 * @param arrayColor the array of colors that we want to add in the model
+	 * @param arrayTool the array of tools that we want to add in the model
+	 */
 	public void setElements(ArrayList<Element> arrayColor, ArrayList<Element> arrayTool) {
 		if(arrayColor != null && arrayTool !=null) {
 			this.sizeColor=arrayColor.size();

@@ -44,38 +44,50 @@ public class PaintVue extends JFrame {
 	private PaintModel pm;
 	private JLayeredPane lp = new JLayeredPane();
 	final JMarkingMenu f;
-	
+	private Line2D persistentLine = new Line2D.Double(0,0,0,0);
+	private Tool oldtool;
 	public PaintVue(String title,  final PaintModel pm) {
 		super(title);
 		this.pm=pm;
+		lp.setBounds(0, 80, 800, 560);
 	
-		Element elem = new Element("ss");
-		Element eleme = new Element("dd");
-		Element elemed = new Element("ddd");
-		Element elemedd = new Element("ddd");
-		Element elemeddd = new Element("ddd");
+		Element pen = new Element("pen");
+		Element line = new Element("line");
+		Element rect = new Element("rect");
+		Element ellipse = new Element("ellipse");
 		
 		Element elem1 = new Element(Color.BLACK);
 		Element eleme1 = new Element(Color.BLUE);
 		Element elemed1 = new Element(Color.GREEN);
-		Element elemedd1 = new Element(Color.GRAY);
+		Element elemedd1 = new Element(Color.YELLOW);
 		Element elemeddd1 = new Element(Color.RED);
+		Element elemedddd1 = new Element(Color.MAGENTA);
+		
+		
 
 
-		ArrayList<Element> arrayColor = new ArrayList<Element> () {};
+		ArrayList<Element> arrayColor = new ArrayList<Element> ();
 		arrayColor.add(elem1);
 		arrayColor.add(eleme1);
 		arrayColor.add(elemed1);
 		arrayColor.add(elemedd1);
+		arrayColor.add(elemeddd1);
+		arrayColor.add(elemedddd1);
+		arrayColor.add(new Element(Color.CYAN));
+
+
 		
-		ArrayList<Element> arrayTool = new ArrayList<Element> () {};
-		arrayTool.add(elem);
-		arrayTool.add(eleme);
-		arrayTool.add(elemed);
-		arrayTool.add(elemedd);
+		ArrayList<Element> arrayTool = new ArrayList<Element> ();
+		arrayTool.add(pen);
+		arrayTool.add(line);
+		arrayTool.add(rect);
+		arrayTool.add(ellipse);
 
 
 		f = new JMarkingMenu(lp, arrayColor, arrayTool );
+		
+		f.addMouseListener(f);
+		f.addMouseMotionListener(f);
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(800, 600));
@@ -146,30 +158,50 @@ public class PaintVue extends JFrame {
 					g2.setColor(e.getValue());
 					g2.draw(e.getKey());
 				}
+				if(f.getChangeColor() && f.getElement().getColor() != null && pm.getColor() != f.getElement().getColor() ) {
+					System.out.println("AAA");
+					pm.setColor(f.getElement().getColor());
+					f.setChangeColor(false);
+				}
 			}
 		},JLayeredPane.DEFAULT_LAYER);
 		panel.setBounds(0,40,800,560);
 		tb.setBounds(0,0,800,40);
 	
-		lp.add(tb,JLayeredPane.FRAME_CONTENT_LAYER);
+		lp.add(tb,JLayeredPane.DEFAULT_LAYER);
 
 
 		add(lp);
 		
-		panel.addMouseListener(new MouseListener() {
+		lp.addMouseListener(new MouseListener() {
 
-			public void mouseClicked(MouseEvent e) {}
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("TAP");
+			}
 
 			public void mousePressed(MouseEvent e) {
 				if (e.getButton() == MouseEvent.BUTTON3) {
 					f.setBounds(e.getX() - 100,e.getY() - 57 ,200,200);
 					lp.add(f,JLayeredPane.PALETTE_LAYER);
+					
 				}
 			}
 
-			public void mouseReleased(MouseEvent e) {}
-			public void mouseEntered(MouseEvent e) {}
+			public void mouseReleased(MouseEvent e) {
+			}
+			public void mouseEntered(MouseEvent e) {
+				if(f.getChangeTool()) {	
+					System.out.println("aaaaaaaaa");
+					lp.removeMouseListener(tool);
+					lp.removeMouseMotionListener(tool);
+					tool = tools[f.getElement().getToolID()];
+					lp.addMouseListener(tool);
+					lp.addMouseMotionListener(tool);
+					f.setChangeTool(false);
+				}
+			}
 			public void mouseExited(MouseEvent e) {
+
 			}});
 		
 		pack();
@@ -186,11 +218,11 @@ public class PaintVue extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("using tool " + this);
-			panel.removeMouseListener(tool);
-			panel.removeMouseMotionListener(tool);
+			lp.removeMouseListener(tool);
+			lp.removeMouseMotionListener(tool);
 			tool = this;
-			panel.addMouseListener(tool);
-			panel.addMouseMotionListener(tool);
+			lp.addMouseListener(tool);
+			lp.addMouseMotionListener(tool);
 		}
 
 		public void mouseClicked(MouseEvent e) {
@@ -261,11 +293,21 @@ public class PaintVue extends JFrame {
 					abs(e.getY() - o.getY()));
 			panel.repaint();
 		}
-	}, };
+	}
+	};
 
 	Tool tool;
 
 	JPanel panel;
 	
+	
+	//TODO 
+	public void drawPersistentLine(Line2D line) {
+		this.persistentLine = line;
+	}
+	
+	public void removePersistentLine() {
+		this.persistentLine = new Line2D.Double(0,0,0,0);
+	}
 
 }
