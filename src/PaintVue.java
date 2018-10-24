@@ -40,22 +40,32 @@ public class PaintVue extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	//** We defined here useful constant
+	//Width of the full window
 	public static final int WIDTH = 800;
+	//Height of the full window
 	public static final int HEIGHT = 600;
+	//Height of the tool bar
 	public static final int TOOLBAR_HEIGHT = 40;
+
 	private PaintModel pm;
+	//LP is the layeredPane which is use to handle multiple layer
 	private JLayeredPane lp = new JLayeredPane();
+	//Marking Menu's component variable
 	final JMarkingMenu f;
+	
+	
 	public PaintVue(String title,  final PaintModel pm) {
 		super(title);
 		this.pm=pm;
 		lp.setBounds(0, 80, WIDTH, HEIGHT - TOOLBAR_HEIGHT);
 	
+		// Creating elements of tools 
 		Element pen = new Element("pen");
 		Element line = new Element("line");
 		Element rect = new Element("rect");
 		Element ellipse = new Element("ellipse");
-		
+		// Creating elements of colors
 		Element elem1 = new Element(Color.BLACK);
 		Element eleme1 = new Element(Color.BLUE);
 		Element elemed1 = new Element(Color.GREEN);
@@ -63,7 +73,7 @@ public class PaintVue extends JFrame {
 		Element elemeddd1 = new Element(Color.RED);
 		Element elemedddd1 = new Element(Color.WHITE);
 
-
+		//Define our Color array and Tool array
 		ArrayList<Element> arrayColor = new ArrayList<Element> ();
 		arrayColor.add(elem1);
 		arrayColor.add(eleme1);
@@ -79,14 +89,17 @@ public class PaintVue extends JFrame {
 		arrayTool.add(rect);
 		arrayTool.add(ellipse);
 
-
+		//Initializing the MarkingMenu with elements arrays and the layerpane.
 		f = new JMarkingMenu(lp, arrayColor, arrayTool );
 		
+		//Define listener for the Marking Menu
 		f.addMouseListener(f);
 		f.addMouseMotionListener(f);
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(WIDTH, HEIGHT));
+		
+		//Define the toolbar with Colors and tools
 		JToolBar tb = new JToolBar() {{
 			for(AbstractAction tool: tools) {
 				tool.setEnabled(true);
@@ -134,7 +147,7 @@ public class PaintVue extends JFrame {
 			});			
 			add(black);
 		}};
-		
+		//Add the panel (drawing area) into the layerpane
 		lp.add(panel = new JPanel() {	
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);	
@@ -160,6 +173,7 @@ public class PaintVue extends JFrame {
 				}
 			}
 		},JLayeredPane.DEFAULT_LAYER);
+		
 		panel.setBounds(0,TOOLBAR_HEIGHT,WIDTH,HEIGHT - TOOLBAR_HEIGHT);
 		tb.setBounds(0,0,WIDTH,TOOLBAR_HEIGHT);
 	
@@ -168,22 +182,25 @@ public class PaintVue extends JFrame {
 
 		add(lp);
 		
+		//Mouse listener on the LayerPane.  
 		lp.addMouseListener(new MouseListener() {
 
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("TAP");
 			}
 
+			//Add the marking menu after right click
 			public void mousePressed(MouseEvent e) {
 				if (e.getButton() == MouseEvent.BUTTON3) {
 					f.setBounds(e.getX() - 100,e.getY() - 100,200,200);
 					lp.add(f,JLayeredPane.PALETTE_LAYER);
-					
 				}
 			}
 
 			public void mouseReleased(MouseEvent e) {
 			}
+			
+			//Action to perform tool changes when needed.
 			public void mouseEntered(MouseEvent e) {
 				if(f.getChangeTool()) {	
 					lp.removeMouseListener(tool);
@@ -201,7 +218,8 @@ public class PaintVue extends JFrame {
 		pack();
 		setVisible(true);
 	}
-		
+	
+	//Tool class	
 	class Tool extends AbstractAction implements MouseInputListener {
 		Point o;
 		Shape shape;
@@ -244,46 +262,51 @@ public class PaintVue extends JFrame {
 		}
 	}
 
+	//Define tools and behaviours
 	Tool tools[] = { new Tool("pen") {
 		public void mouseDragged(MouseEvent e) {
+			int y = e.getY() - TOOLBAR_HEIGHT;
 			Path2D.Double path = (Path2D.Double) shape;
 			if (path == null) {
 				path = new Path2D.Double();
-				path.moveTo(o.getX(), o.getY());
+				path.moveTo(o.getX(), o.getY() - TOOLBAR_HEIGHT);
 				pm.addShape(shape = path, pm.getColor());
 			}
-			path.lineTo(e.getX(), e.getY());
+			path.lineTo(e.getX(), y);
 			panel.repaint();
 		}
 	}, new Tool("line") {
 		public void mouseDragged(MouseEvent e) {
+			int y = e.getY() - TOOLBAR_HEIGHT;
 			Line2D.Double line = (Line2D.Double) shape;
 			if(line == null) {
-				line = new Line2D.Double(e.getX(), e.getY(), 0, 0);
+				line = new Line2D.Double(e.getX(), e.getY() - TOOLBAR_HEIGHT, 0, 0);
 				pm.addShape(shape = line, pm.getColor());
 			}
-			line.setLine(e.getX(), e.getY(),o.getX(), o.getY());
+			line.setLine(e.getX(), e.getY() - TOOLBAR_HEIGHT,o.getX(), o.getY()- TOOLBAR_HEIGHT);
 			panel.repaint();
 		}
 	}, new Tool("rect") {
 		public void mouseDragged(MouseEvent e) {
+			int y = e.getY() - TOOLBAR_HEIGHT;
 			Rectangle2D.Double rect = (Rectangle2D.Double) shape;
 			if (rect == null) {
-				rect = new Rectangle2D.Double(o.getX(), o.getY(), 0, 0);
+				rect = new Rectangle2D.Double(o.getX(), o.getY()- TOOLBAR_HEIGHT, 0, 0);
 				pm.addShape(shape = rect, pm.getColor());
 			}
-			rect.setRect(min(e.getX(), o.getX()), min(e.getY(), o.getY()), abs(e.getX() - o.getX()),
+			rect.setRect(min(e.getX(), o.getX()), min(e.getY() - TOOLBAR_HEIGHT, o.getY()- TOOLBAR_HEIGHT), abs(e.getX() - o.getX()),
 					abs(e.getY() - o.getY()));
 			panel.repaint();
 		}
 	}, new Tool("ellipse") {
 		public void mouseDragged(MouseEvent e) {
+			int y = e.getY() - TOOLBAR_HEIGHT;
 			Ellipse2D.Double ellipse = (Ellipse2D.Double) shape;
 			if (ellipse == null) {
 				ellipse = new Ellipse2D.Double(o.getX(), o.getY(), 0, 0);
 				pm.addShape(shape = ellipse, pm.getColor());
 			}
-			ellipse.setFrame(min(e.getX(), o.getX()), min(e.getY(), o.getY()), abs(e.getX() - o.getX()),
+			ellipse.setFrame(min(e.getX(), o.getX()), min(e.getY() - TOOLBAR_HEIGHT, o.getY() - TOOLBAR_HEIGHT), abs(e.getX() - o.getX()),
 					abs(e.getY() - o.getY()));
 			panel.repaint();
 		}
