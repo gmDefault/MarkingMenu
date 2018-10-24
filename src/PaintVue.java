@@ -40,16 +40,16 @@ public class PaintVue extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	public static final int WIDTH = 800;
+	public static final int HEIGHT = 600;
+	public static final int TOOLBAR_HEIGHT = 40;
 	private PaintModel pm;
 	private JLayeredPane lp = new JLayeredPane();
 	final JMarkingMenu f;
-	private Line2D persistentLine = new Line2D.Double(0,0,0,0);
-	private Tool oldtool;
 	public PaintVue(String title,  final PaintModel pm) {
 		super(title);
 		this.pm=pm;
-		lp.setBounds(0, 80, 800, 560);
+		lp.setBounds(0, 80, WIDTH, HEIGHT - TOOLBAR_HEIGHT);
 	
 		Element pen = new Element("pen");
 		Element line = new Element("line");
@@ -86,7 +86,7 @@ public class PaintVue extends JFrame {
 		f.addMouseMotionListener(f);
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setMinimumSize(new Dimension(800, 600));
+		setMinimumSize(new Dimension(WIDTH, HEIGHT));
 		JToolBar tb = new JToolBar() {{
 			for(AbstractAction tool: tools) {
 				tool.setEnabled(true);
@@ -155,14 +155,13 @@ public class PaintVue extends JFrame {
 					g2.draw(e.getKey());
 				}
 				if(f.getChangeColor() && f.getElement().getColor() != null && pm.getColor() != f.getElement().getColor() ) {
-					System.out.println("AAA");
 					pm.setColor(f.getElement().getColor());
 					f.setChangeColor(false);
 				}
 			}
 		},JLayeredPane.DEFAULT_LAYER);
-		panel.setBounds(0,40,800,560);
-		tb.setBounds(0,0,800,40);
+		panel.setBounds(0,TOOLBAR_HEIGHT,WIDTH,HEIGHT - TOOLBAR_HEIGHT);
+		tb.setBounds(0,0,WIDTH,TOOLBAR_HEIGHT);
 	
 		lp.add(tb,JLayeredPane.DEFAULT_LAYER);
 
@@ -177,7 +176,7 @@ public class PaintVue extends JFrame {
 
 			public void mousePressed(MouseEvent e) {
 				if (e.getButton() == MouseEvent.BUTTON3) {
-					f.setBounds(e.getX() - 100,e.getY() - 57 ,200,200);
+					f.setBounds(e.getX() - 100,e.getY() - 100,200,200);
 					lp.add(f,JLayeredPane.PALETTE_LAYER);
 					
 				}
@@ -187,7 +186,6 @@ public class PaintVue extends JFrame {
 			}
 			public void mouseEntered(MouseEvent e) {
 				if(f.getChangeTool()) {	
-					System.out.println("aaaaaaaaa");
 					lp.removeMouseListener(tool);
 					lp.removeMouseMotionListener(tool);
 					tool = tools[f.getElement().getToolID()];
@@ -296,14 +294,4 @@ public class PaintVue extends JFrame {
 
 	JPanel panel;
 	
-	
-	//TODO 
-	public void drawPersistentLine(Line2D line) {
-		this.persistentLine = line;
-	}
-	
-	public void removePersistentLine() {
-		this.persistentLine = new Line2D.Double(0,0,0,0);
-	}
-
 }
