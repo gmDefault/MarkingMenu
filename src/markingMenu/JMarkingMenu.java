@@ -1,6 +1,5 @@
-package marking.ui;
+package markingMenu;
 
-import java.awt.AWTEvent;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -192,7 +191,6 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("Click");
 
 	}
 
@@ -217,7 +215,6 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 			this.setChangeTool(true);
 		}
 		state = state == 0 ? ++state : 0;
-		System.out.println(state);
 		if (state == 1) {
 			this.setBounds((int) this.getLocation().getX() + e.getX() - radius,
 					(int) this.getLocation().getY() + e.getY() - radius, width, height);
@@ -233,7 +230,6 @@ public class JMarkingMenu extends JComponent implements MouseInputListener {
 	@Override
 	public void mouseDragged(MouseEvent e) {
 
-		System.out.println(model.getX() + " " + model.getY() + " " + in + " " + e.getX() + " " + e.getY());
 
 		this.repaint();
 

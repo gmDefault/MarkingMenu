@@ -31,8 +31,8 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.event.MouseInputListener;
 
-import marking.ui.Element;
-import marking.ui.JMarkingMenu;
+import markingMenu.Element;
+import markingMenu.JMarkingMenu;
 
 public class PaintVue extends JFrame {
 
@@ -57,6 +57,7 @@ public class PaintVue extends JFrame {
 	
 	public PaintVue(String title,  final PaintModel pm) {
 		super(title);
+		setResizable(false);
 		this.pm=pm;
 		lp.setBounds(0, 80, WIDTH, HEIGHT - TOOLBAR_HEIGHT);
 	
@@ -191,7 +192,6 @@ public class PaintVue extends JFrame {
 		lp.addMouseListener(new MouseListener() {
 
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("TAP");
 			}
 
 			//Add the marking menu after right click
@@ -234,7 +234,6 @@ public class PaintVue extends JFrame {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("using tool " + this);
 			lp.removeMouseListener(tool);
 			lp.removeMouseMotionListener(tool);
 			tool = this;
