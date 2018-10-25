@@ -1,6 +1,8 @@
 # MarkingMenu
 TP2 IIHM RICM5 Polytech Grenoble
 
+![Visual example of our Marking Menu](example.gif)
+
 
 ## Membres :
 Cédric LAFRASSE - Bastien TERRIER
